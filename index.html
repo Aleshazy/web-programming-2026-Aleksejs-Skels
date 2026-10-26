@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusFlow Dashboard</title>
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body class="bg-bg font-sans text-ink leading-normal">
+
+  <header class="sticky top-0 z-50 border-b border-line/90 bg-white/90 backdrop-blur-[14px]">
+    <div class="mx-auto flex min-h-[72px] max-w-[1180px] items-center gap-7 px-5">
+      <a class="inline-flex items-center gap-2.5 font-extrabold tracking-tight rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary" href="#">
+        <span class="grid size-[38px] place-items-center rounded-xl bg-linear-to-br from-primary to-[#8a7dff] text-[13px] text-white shadow-[0_8px_20px_rgba(109,93,252,0.28)]">CF</span>
+        <span>CampusFlow</span>
+      </a>
+
+      <nav id="mainNav" class="hidden md:flex flex-col md:flex-row items-stretch md:items-center gap-1.5 md:ml-[18px] absolute md:static top-[72px] left-5 right-5 md:top-auto md:left-auto md:right-auto rounded-2xl md:rounded-none border border-line md:border-0 bg-white md:bg-transparent p-2.5 md:p-0 shadow-[0_18px_50px_rgba(34,45,78,0.08)] md:shadow-none">
+        <a aria-current="page" class="rounded-[10px] bg-[#f1f3f8] px-3 py-2.5 md:py-[9px] text-sm font-semibold text-ink transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#">Dashboard</a>
+        <a class="rounded-[10px] px-3 py-2.5 md:py-[9px] text-sm font-semibold text-muted transition hover:bg-[#f1f3f8] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#projects">Projects</a>
+        <a class="rounded-[10px] px-3 py-2.5 md:py-[9px] text-sm font-semibold text-muted transition hover:bg-[#f1f3f8] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#deadlines">Deadlines</a>
+        <a class="rounded-[10px] px-3 py-2.5 md:py-[9px] text-sm font-semibold text-muted transition hover:bg-[#f1f3f8] hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#resources">Resources</a>
+      </nav>
+
+      <div class="ml-auto flex items-center gap-2.5">
+        <div class="grid size-[38px] place-items-center rounded-full bg-ink text-xs font-extrabold text-white">AZ</div>
+        <div class="hidden sm:grid gap-px">
+          <strong class="text-[13px]">Alex Student</strong>
+          <span class="text-[11px] text-muted">Web Programming</span>
+        </div>
+      </div>
+
+      <button id="menuButton" aria-label="Toggle navigation" aria-expanded="false" class="flex size-[42px] flex-col justify-center gap-[10px] rounded-[10px] p-[9px] md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+        <span class="block h-0.5 rounded-full bg-ink"></span>
+        <span class="block h-0.5 rounded-full bg-ink"></span>
+        <span class="block h-0.5 rounded-full bg-ink"></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="bg-[radial-gradient(circle_at_15%_10%,rgba(109,93,252,0.14),transparent_34%),radial-gradient(circle_at_85%_0%,rgba(55,136,255,0.10),transparent_28%)] pt-16 pb-12 max-md:pt-10">
+      <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-14 px-5 lg:grid-cols-[1.4fr_0.8fr]">
+        <div>
+          <span class="mb-2.5 block text-[11px] font-extrabold tracking-[0.14em] text-primary">MONDAY WORKSPACE</span>
+          <h1 class="max-w-[760px] text-[clamp(43px,6vw,72px)] leading-[0.98] font-bold tracking-[-0.055em]">Build, learn, and ship something useful.</h1>
+          <p class="mt-6 max-w-[650px] text-base text-muted md:text-lg">Track your current web-development tasks, upcoming deadlines, and project progress in one place.</p>
+          <div class="mt-[30px] grid gap-3 sm:flex sm:flex-wrap">
+            <a class="inline-flex min-h-11 items-center justify-center rounded-xl bg-primary px-[18px] text-sm font-bold text-white shadow-[0_12px_24px_rgba(109,93,252,0.24)] transition hover:-translate-y-px hover:bg-primary-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#projects">View projects</a>
+            <a class="inline-flex min-h-11 items-center justify-center rounded-xl border border-line bg-white px-[18px] text-sm font-bold transition hover:-translate-y-px hover:shadow-[0_10px_24px_rgba(34,45,78,0.08)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#resources">Open resources</a>
+          </div>
+        </div>
+
+        <aside class="rounded-[22px] border border-white/60 bg-white/80 p-6 shadow-[0_18px_50px_rgba(34,45,78,0.08)] backdrop-blur-[10px]">
+          <p class="mb-[18px] text-[13px] font-bold text-muted">This week</p>
+          <div class="mb-[9px] flex items-center justify-between gap-4 text-[13px]">
+            <span class="text-muted">Course progress</span><strong>68%</strong>
+          </div>
+          <div class="h-[9px] overflow-hidden rounded-full bg-[#eceef4]">
+            <div class="h-full rounded-[inherit] bg-linear-to-r from-primary to-[#8e80ff]" style="width: 68%"></div>
+          </div>
+          <div class="mt-6 grid grid-cols-3 gap-3">
+            <div class="rounded-[14px] bg-[#f8fafc] px-2.5 py-4 text-center"><strong class="block text-[21px]">4</strong><span class="mt-[3px] block text-[10px] text-muted">Open tasks</span></div>
+            <div class="rounded-[14px] bg-[#f8fafc] px-2.5 py-4 text-center"><strong class="block text-[21px]">2</strong><span class="mt-[3px] block text-[10px] text-muted">Due soon</span></div>
+            <div class="rounded-[14px] bg-[#f8fafc] px-2.5 py-4 text-center"><strong class="block text-[21px]">7</strong><span class="mt-[3px] block text-[10px] text-muted">Completed</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="mx-auto max-w-[1180px] px-5 pt-[34px] pb-4">
+      <div class="mb-5 flex flex-col items-start gap-2 md:flex-row md:items-end md:justify-between md:gap-6">
+        <div>
+          <p class="mb-2.5 text-[11px] font-extrabold tracking-[0.14em] text-primary">OVERVIEW</p>
+          <h2 class="text-[28px] font-bold tracking-[-0.035em]">Your workspace</h2>
+        </div>
+        <p class="max-w-[420px] text-sm text-muted">A quick snapshot of what needs attention today.</p>
+      </div>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <article class="flex gap-3.5 rounded-[18px] border border-line bg-white p-5 shadow-[0_10px_30px_rgba(34,45,78,0.04)]">
+          <div class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#f0edff] text-[11px] font-extrabold text-primary">01</div>
+          <div><p class="mb-1 text-xs text-muted">Active projects</p><strong class="block text-[26px] leading-[1.1]">3</strong><span class="mt-[7px] block text-[10px] font-bold text-brand-green">+1 this month</span></div>
+        </article>
+        <article class="flex gap-3.5 rounded-[18px] border border-line bg-white p-5 shadow-[0_10px_30px_rgba(34,45,78,0.04)]">
+          <div class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#f0edff] text-[11px] font-extrabold text-primary">02</div>
+          <div><p class="mb-1 text-xs text-muted">Tasks completed</p><strong class="block text-[26px] leading-[1.1]">18</strong><span class="mt-[7px] block text-[10px] font-bold text-brand-green">+6 this week</span></div>
+        </article>
+        <article class="flex gap-3.5 rounded-[18px] border border-line bg-white p-5 shadow-[0_10px_30px_rgba(34,45,78,0.04)]">
+          <div class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#f0edff] text-[11px] font-extrabold text-primary">03</div>
+          <div><p class="mb-1 text-xs text-muted">Quiz average</p><strong class="block text-[26px] leading-[1.1]">84%</strong><span class="mt-[7px] block text-[10px] font-bold text-muted">Last 4 quizzes</span></div>
+        </article>
+        <article class="flex gap-3.5 rounded-[18px] border border-line bg-white p-5 shadow-[0_10px_30px_rgba(34,45,78,0.04)]">
+          <div class="grid size-10 shrink-0 place-items-center rounded-xl bg-[#f0edff] text-[11px] font-extrabold text-primary">04</div>
+          <div><p class="mb-1 text-xs text-muted">Focus time</p><strong class="block text-[26px] leading-[1.1]">7.5h</strong><span class="mt-[7px] block text-[10px] font-bold text-brand-green">+12% vs last week</span></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="mx-auto max-w-[1180px] px-5 pt-[34px] pb-4" id="projects">
+      <div class="mb-5 flex flex-col items-stretch gap-4 md:flex-row md:items-center md:justify-between md:gap-6">
+        <div>
+          <p class="mb-2.5 text-[11px] font-extrabold tracking-[0.14em] text-primary">PROJECTS</p>
+          <h2 class="text-[28px] font-bold tracking-[-0.035em]">Current work</h2>
+        </div>
+        <div class="inline-flex gap-1 rounded-xl border border-line bg-white p-1" role="group" aria-label="Project filters">
+          <button aria-pressed="true" data-filter="all" class="filter-button flex-1 cursor-pointer rounded-lg px-[11px] py-[7px] text-xs font-bold text-muted transition hover:bg-[#f0f2f7] hover:text-ink aria-pressed:bg-[#f0f2f7] aria-pressed:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">All</button>
+          <button aria-pressed="false" data-filter="active" class="filter-button flex-1 cursor-pointer rounded-lg px-[11px] py-[7px] text-xs font-bold text-muted transition hover:bg-[#f0f2f7] hover:text-ink aria-pressed:bg-[#f0f2f7] aria-pressed:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Active</button>
+          <button aria-pressed="false" data-filter="done" class="filter-button flex-1 cursor-pointer rounded-lg px-[11px] py-[7px] text-xs font-bold text-muted transition hover:bg-[#f0f2f7] hover:text-ink aria-pressed:bg-[#f0f2f7] aria-pressed:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Done</button>
+        </div>
+      </div>
+
+      <!-- Component: informational notice -->
+      <div role="status" class="mb-5 flex items-start gap-3 rounded-xl border border-[#cfe3ff] bg-[#eaf3ff] px-4 py-3 text-sm text-[#2f6fc2]">
+        <span class="mt-px font-extrabold">i</span>
+        <p><strong class="font-bold">Next deadline:</strong> Tailwind migration is due in 2 days. Commit each checkpoint to keep your history clear.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-[18px] md:grid-cols-2 lg:grid-cols-3" id="projectGrid">
+        <article class="project-card rounded-[18px] border border-line bg-white p-[22px] transition duration-200 hover:-translate-y-[3px] hover:border-[#d5d9e6] hover:shadow-[0_18px_50px_rgba(34,45,78,0.08)]" data-status="active">
+          <div class="flex items-center justify-between gap-3">
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#f0edff] px-[9px] text-[10px] font-extrabold text-[#6352ed]">Frontend</span>
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#eef6ff] px-[9px] text-[10px] font-extrabold text-brand-blue">Active</span>
+          </div>
+          <h3 class="mt-6 mb-2 text-xl font-bold tracking-[-0.025em]">Responsive Portfolio</h3>
+          <p class="min-h-[66px] text-[13px] text-muted">Create a polished portfolio with reusable components and responsive layouts.</p>
+          <div class="mt-[22px] mb-[9px] flex items-center justify-between gap-3 text-[10px] font-bold text-muted"><span>Due Sep 21</span><span>72% complete</span></div>
+          <div class="h-[7px] overflow-hidden rounded-full bg-[#eceef4]"><div class="h-full rounded-[inherit] bg-primary" style="width:72%"></div></div>
+          <a class="mt-[18px] inline-block text-xs font-extrabold text-primary hover:text-primary-dark" href="#">Open project →</a>
+        </article>
+
+        <article class="project-card rounded-[18px] border border-line bg-white p-[22px] transition duration-200 hover:-translate-y-[3px] hover:border-[#d5d9e6] hover:shadow-[0_18px_50px_rgba(34,45,78,0.08)]" data-status="active">
+          <div class="flex items-center justify-between gap-3">
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#eaf3ff] px-[9px] text-[10px] font-extrabold text-[#2f78d6]">API</span>
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#eef6ff] px-[9px] text-[10px] font-extrabold text-brand-blue">Active</span>
+          </div>
+          <h3 class="mt-6 mb-2 text-xl font-bold tracking-[-0.025em]">Weather Dashboard</h3>
+          <p class="min-h-[66px] text-[13px] text-muted">Fetch remote data, handle loading states, and present forecast information clearly.</p>
+          <div class="mt-[22px] mb-[9px] flex items-center justify-between gap-3 text-[10px] font-bold text-muted"><span>Due Sep 28</span><span>45% complete</span></div>
+          <div class="h-[7px] overflow-hidden rounded-full bg-[#eceef4]"><div class="h-full rounded-[inherit] bg-brand-blue" style="width:45%"></div></div>
+          <a class="mt-[18px] inline-block text-xs font-extrabold text-primary hover:text-primary-dark" href="#">Open project →</a>
+        </article>
+
+        <article class="project-card rounded-[18px] border border-line bg-white p-[22px] transition duration-200 hover:-translate-y-[3px] hover:border-[#d5d9e6] hover:shadow-[0_18px_50px_rgba(34,45,78,0.08)]" data-status="done">
+          <div class="flex items-center justify-between gap-3">
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#e9f8f2] px-[9px] text-[10px] font-extrabold text-[#16875b]">JavaScript</span>
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#edf9f4] px-[9px] text-[10px] font-extrabold text-brand-green">Done</span>
+          </div>
+          <h3 class="mt-6 mb-2 text-xl font-bold tracking-[-0.025em]">Task Manager</h3>
+          <p class="min-h-[66px] text-[13px] text-muted">Build a small CRUD interface with filtering, local storage, and form validation.</p>
+          <div class="mt-[22px] mb-[9px] flex items-center justify-between gap-3 text-[10px] font-bold text-muted"><span>Submitted Sep 7</span><span>100% complete</span></div>
+          <div class="h-[7px] overflow-hidden rounded-full bg-[#eceef4]"><div class="h-full rounded-[inherit] bg-brand-green" style="width:100%"></div></div>
+          <a class="mt-[18px] inline-block text-xs font-extrabold text-primary hover:text-primary-dark" href="#">View submission →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Deadlines + Resources -->
+    <section class="mx-auto grid max-w-[1180px] grid-cols-1 gap-[18px] px-5 pt-[34px] pb-16 lg:grid-cols-[1.45fr_0.75fr]">
+      <section class="rounded-[18px] border border-line bg-white p-6" id="deadlines">
+        <div class="mb-5 flex items-center justify-between gap-6">
+          <div>
+            <p class="mb-2.5 text-[11px] font-extrabold tracking-[0.14em] text-primary">DEADLINES</p>
+            <h2 class="text-[28px] font-bold tracking-[-0.035em]">Coming up</h2>
+          </div>
+          <a class="text-xs font-extrabold text-primary hover:text-primary-dark" href="#">See all</a>
+        </div>
+        <div class="grid gap-1">
+          <article class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-b border-line px-2 py-3.5 last:border-b-0">
+            <div class="grid min-h-[50px] w-[46px] place-items-center content-center rounded-xl bg-[#f8fafc]"><strong class="text-[17px] leading-none">18</strong><span class="mt-1 text-[9px] font-extrabold text-muted">SEP</span></div>
+            <div class="grid gap-[3px]"><strong class="text-[13px]">Tailwind migration</strong><span class="text-[11px] text-muted">Web Programming · 23:59</span></div>
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#fdeeee] px-[9px] text-[10px] font-extrabold text-[#c64444]">2 days</span>
+          </article>
+          <article class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-b border-line px-2 py-3.5 last:border-b-0">
+            <div class="grid min-h-[50px] w-[46px] place-items-center content-center rounded-xl bg-[#f8fafc]"><strong class="text-[17px] leading-none">21</strong><span class="mt-1 text-[9px] font-extrabold text-muted">SEP</span></div>
+            <div class="grid gap-[3px]"><strong class="text-[13px]">Portfolio checkpoint</strong><span class="text-[11px] text-muted">Web Programming · 18:00</span></div>
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#fff5de] px-[9px] text-[10px] font-extrabold text-[#aa7416]">5 days</span>
+          </article>
+          <article class="grid grid-cols-[auto_1fr_auto] items-center gap-3.5 border-b border-line px-2 py-3.5 last:border-b-0">
+            <div class="grid min-h-[50px] w-[46px] place-items-center content-center rounded-xl bg-[#f8fafc]"><strong class="text-[17px] leading-none">28</strong><span class="mt-1 text-[9px] font-extrabold text-muted">SEP</span></div>
+            <div class="grid gap-[3px]"><strong class="text-[13px]">Weather Dashboard</strong><span class="text-[11px] text-muted">Web Programming · 23:59</span></div>
+            <span class="inline-flex min-h-[25px] items-center rounded-full bg-[#f1f3f6] px-[9px] text-[10px] font-extrabold text-[#6f7788]">12 days</span>
+          </article>
+        </div>
+      </section>
+
+      <aside class="rounded-[18px] border border-line bg-white p-6" id="resources">
+        <p class="mb-2.5 text-[11px] font-extrabold tracking-[0.14em] text-primary">RESOURCES</p>
+        <h2 class="text-[28px] font-bold tracking-[-0.035em]">Useful links</h2>
+        <p class="mt-2 mb-[18px] text-[13px] text-muted">Keep these close while working through the project.</p>
+        <div class="grid gap-2">
+          <a class="flex items-center gap-3 rounded-[13px] border border-line p-3 transition hover:border-[#cacfe0] hover:bg-[#f8fafc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#"><span class="grid size-[34px] place-items-center rounded-[10px] bg-[#f0edff] text-[10px] font-extrabold text-primary">01</span><span class="grid gap-0.5"><strong class="text-xs">Course repository</strong><small class="text-[10px] text-muted">Starter code and weekly tasks</small></span></a>
+          <a class="flex items-center gap-3 rounded-[13px] border border-line p-3 transition hover:border-[#cacfe0] hover:bg-[#f8fafc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#"><span class="grid size-[34px] place-items-center rounded-[10px] bg-[#f0edff] text-[10px] font-extrabold text-primary">02</span><span class="grid gap-0.5"><strong class="text-xs">Reference notes</strong><small class="text-[10px] text-muted">Quick examples and explanations</small></span></a>
+          <a class="flex items-center gap-3 rounded-[13px] border border-line p-3 transition hover:border-[#cacfe0] hover:bg-[#f8fafc] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" href="#"><span class="grid size-[34px] place-items-center rounded-[10px] bg-[#f0edff] text-[10px] font-extrabold text-primary">03</span><span class="grid gap-0.5"><strong class="text-xs">Submission guide</strong><small class="text-[10px] text-muted">Checklist before you submit</small></span></a>
+        </div>
+        <div class="mt-[18px] rounded-[13px] border border-[#f3e4b6] bg-[#fff8e8] p-3.5">
+          <strong class="text-[11px] text-[#9a6c16]">Tip</strong>
+          <p class="mt-1 text-[11px] text-[#735d34]">Use browser DevTools while migrating the page. Compare computed styles before and after each change.</p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="border-t border-line bg-white">
+    <div class="mx-auto flex min-h-[74px] max-w-[1180px] flex-col items-start justify-between gap-5 px-5 py-4 text-[11px] text-muted sm:flex-row sm:items-center">
+      <span>CampusFlow · Web Programming</span>
+      <span>Starter project for CSS → Tailwind migration</span>
+    </div>
+  </footer>
+
+</body>
+</html>
