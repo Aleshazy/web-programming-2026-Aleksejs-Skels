@@ -1,36 +1,16 @@
-# Individuālā refleksija
+﻿# Individuālā refleksija
 
-Aizpildiet šo daļu individuāli nodarbības beigās, **neizmantojot mākslīgā intelekta rīkus**.
+## 1. Ko deva tipi?
+JavaScript ir dinamisks, un kļūdas parādās tikai izpildes laikā. TypeScript pievieno statisko tipu pārbaudi, kas kļūdas parāda jau kompilācijas brīdī. Šī darba laikā TypeScript man parādīja kļūdu TS1484, kad mēģināju importēt interfeisus parastajā veidā. Tā kā bija ieslēgts erbatimModuleSyntax, tas pieprasīja izmantot import type, ko es arī izlaboju.
 
-Ieteicamais kopējais apjoms: **aptuveni 200–300 vārdi**.
+## 2. 
+ull un querySelector
+TypeScript uzskata, ka querySelector var atgriezt 
+ull, jo elements var nebūt DOM koka daļā vai tam var būt nepareizs ID. Savā kodā es to apstrādāju ar vienkāršu if (form) pārbaudi pirms notikumu klausītāja pievienošanas, lai izvairītos no 
+ull kļūdām.
 
----
+## 3. Dati no ārpuses
+JSON.parse rezultātam nevar uzticēties, jo lietotājs var manuāli izmainīt localStorage datus, un tie vairs neatbildīs paredzētajai struktūrai. Tāpēc es izmantoju 	ry/catch. innerHTML ir bīstams, jo tas var izpildīt ļaunprātīgus skriptus (XSS uzbrukumi). 	extContent ir drošs, jo tas attēlo tekstu tieši tādu, kāds tas ir.
 
-## 1. Utility-first CSS pieeja
-
-Savā formulējumā paskaidrojiet, ko nozīmē **utility-first CSS** pieeja.
-
-Kā pāreja no `styles.css` uz Tailwind CSS mainīja to, **kur un kā tiek aprakstīts tīmekļa lapas vizuālais noformējums**?
-
----
-
-## 2. Divi migrācijas piemēri
-
-Izvēlieties **divas tīmekļa vietnes daļas**, kuras jūs pats/pati pārveidojāt no tradicionālā CSS uz Tailwind CSS.
-
-Katram piemēram paskaidrojiet:
-
-- ko darīja sākotnējais CSS kods;
-- kuras Tailwind CSS utilītklases jūs izmantojāt;
-- kāpēc izvēlētās utilītklases nodrošina nepieciešamo rezultātu.
-
----
-
-## 3. Jūsu vērtējums
-
-Aprakstiet:
-
-- vienu situāciju, kurā Tailwind CSS, jūsuprāt, ir ērtāks par tradicionālo CSS;
-- vienu situāciju, kurā jūs dotu priekšroku individuāli rakstītam CSS.
-
-Pamatojiet savu viedokli.
+## 4. Jūsu vērtējums
+TypeScript ir lieks maziem, vienkāršiem skriptiem vai ātriem prototipiem, kur tipu aprakstīšana aizņem vairāk laika nekā pats kods. Bet bez tā būtu grūti iztikt lielos projektos ar sarežģītiem datiem un formām, kur tipi palīdz saprast struktūru un novērš kļūdas pirms koda palaišanas.
