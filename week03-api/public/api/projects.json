@@ -1,0 +1,6 @@
+[
+  { "id": "1", "title": "Responsive Portfolio", "description": "Create a polished portfolio with reusable components.", "category": "Frontend", "status": "active", "dueDate": "2026-11-21", "progress": 72 },
+  { "id": "2", "title": "Weather Dashboard", "description": "Fetch remote data, handle loading states.", "category": "API", "status": "active", "dueDate": "2026-11-28", "progress": 45 },
+  { "id": "3", "title": "Task Manager", "description": "Build a small CRUD interface with filtering.", "category": "JavaScript", "status": "done", "dueDate": "2026-11-07", "progress": 100 },
+  { "id": "4", "title": "TypeScript Migration", "description": "Migrate existing JS code to strict TypeScript.", "category": "Other", "status": "active", "dueDate": "2026-12-01", "progress": 10 }
+]

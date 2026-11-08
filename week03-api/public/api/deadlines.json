@@ -1,0 +1,5 @@
+[
+  { "id": "d1", "title": "Tailwind migration", "course": "Web Programming", "date": "2026-11-18", "time": "23:59" },
+  { "id": "d2", "title": "Portfolio checkpoint", "course": "Web Programming", "date": "2026-11-21", "time": "18:00" },
+  { "id": "d3", "title": "Weather Dashboard", "course": "Web Programming", "date": "2026-11-28", "time": "23:59" }
+]
