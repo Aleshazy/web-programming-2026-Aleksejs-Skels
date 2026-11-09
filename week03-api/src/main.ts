@@ -1,47 +1,136 @@
-﻿import './style.css';
-import type { Project, ProjectFilter } from './types';
-import { initialProjects, initialDeadlines } from './data';
-import { renderProjects, renderDeadlines, updateActiveProjectsCount } from './render';
+import './style.css';
+import type { Project, Deadline, CurrentWeather, LoadState, ProjectFilter } from './types';
+import { fetchProjects, fetchDeadlines, fetchWeather } from './api';
+import { renderProjects, renderDeadlines } from './render';
 
-function loadProjects(): Project[] {
+const STORAGE_KEY = 'campusflow.week03.localProjects';
+
+let projectsState: LoadState<Project[]> = { status: 'loading' };
+let deadlinesState: LoadState<Deadline[]> = { status: 'loading' };
+let weatherState: LoadState<CurrentWeather> = { status: 'loading' };
+let localProjects: Project[] = [];
+let currentFilter: ProjectFilter = 'all';
+
+function loadLocalProjects(): Project[] {
   try {
-    const stored = localStorage.getItem('campusflow_projects');
+    const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      const parsed = JSON.parse(stored);
-      if (Array.isArray(parsed) && parsed.every((p: any) => p.id && p.title && typeof p.progress === 'number')) {
+      const parsed: unknown = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.every((p: unknown) => {
+        if (typeof p !== 'object' || p === null) return false;
+        const obj = p as Record<string, unknown>;
+        return typeof obj.id === 'string' && typeof obj.title === 'string' && typeof obj.progress === 'number';
+      })) {
         return parsed as Project[];
       }
     }
   } catch (e) {
-    console.warn('РћС€РёР±РєР° С‡С‚РµРЅРёСЏ localStorage, РёСЃРїРѕР»СЊР·СѓРµРј РЅР°С‡Р°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ', e);
+    console.warn('Failed to read localStorage, using empty array', e);
   }
-  return initialProjects;
+  return [];
 }
-
-let projects = loadProjects();
-const deadlines = initialDeadlines;
-let currentFilter: ProjectFilter = 'all';
 
 function updateUI(): void {
-  const filtered = currentFilter === 'all' 
-    ? projects 
-    : projects.filter(p => p.status === currentFilter);
-  
-  renderProjects(filtered, 'projectGrid');
-  renderDeadlines(deadlines, 'deadlineList');
+  let displayProjects: LoadState<Project[]> = projectsState;
+  if (projectsState.status === 'success') {
+    const combined = [...projectsState.data, ...localProjects];
+    const filtered = currentFilter === 'all' 
+      ? combined 
+      : combined.filter(p => p.status === currentFilter);
+    displayProjects = { status: 'success', data: filtered };
+  }
+
+  renderProjects(displayProjects, 'projectGrid');
+  renderDeadlines(deadlinesState, 'deadlineList');
+  updateWeatherCard();
+  updateActiveProjectsCount();
 }
 
-const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-button');
-filterButtons.forEach(btn => {
+function updateWeatherCard(): void {
+  const card = document.getElementById('weatherCard');
+  if (!card) return;
+  
+  if (weatherState.status === 'loading') {
+    card.textContent = 'Loading weather…';
+  } else if (weatherState.status === 'error') {
+    card.textContent = 'Weather unavailable';
+  } else {
+    card.textContent = `${Math.round(weatherState.data.temperature)}°C · ${weatherState.data.windSpeed} km/h`;
+  }
+}
+
+function updateActiveProjectsCount(): void {
+  const strong = document.querySelector('.stat-card strong');
+  if (!strong) return;
+  
+  if (projectsState.status === 'loading') {
+    strong.textContent = '…';
+  } else if (projectsState.status === 'error') {
+    strong.textContent = '–';
+  } else {
+    const combined = [...projectsState.data, ...localProjects];
+    const count = combined.filter(p => p.status === 'active').length;
+    strong.textContent = String(count);
+  }
+}
+
+async function loadProjects(): Promise<void> {
+  projectsState = { status: 'loading' };
+  updateUI();
+  try {
+    const data = await fetchProjects();
+    projectsState = { status: 'success', data };
+  } catch (e) {
+    projectsState = { status: 'error', message: e instanceof Error ? e.message : 'Unknown error' };
+  }
+  updateUI();
+}
+
+async function loadDeadlines(): Promise<void> {
+  deadlinesState = { status: 'loading' };
+  updateUI();
+  try {
+    const data = await fetchDeadlines();
+    deadlinesState = { status: 'success', data };
+  } catch (e) {
+    deadlinesState = { status: 'error', message: e instanceof Error ? e.message : 'Unknown error' };
+  }
+  updateUI();
+}
+
+async function loadWeather(): Promise<void> {
+  weatherState = { status: 'loading' };
+  updateUI();
+  try {
+    const data = await fetchWeather();
+    weatherState = { status: 'success', data };
+  } catch (e) {
+    weatherState = { status: 'error', message: e instanceof Error ? e.message : 'Unknown error' };
+  }
+  updateUI();
+}
+
+// --- Event Listeners ---
+
+// Retry events
+window.addEventListener('retry-projects', () => {
+  loadProjects();
+});
+window.addEventListener('retry-deadlines', () => {
+  loadDeadlines();
+});
+
+// Filter buttons
+document.querySelectorAll<HTMLButtonElement>('.filter-button').forEach(btn => {
   btn.addEventListener('click', () => {
     currentFilter = btn.dataset.filter as ProjectFilter;
-    filterButtons.forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     updateUI();
-updateActiveProjectsCount(projects);
   });
 });
 
+// Mobile menu
 const menuButton = document.getElementById('menuButton');
 const mainNav = document.getElementById('mainNav');
 if (menuButton && mainNav) {
@@ -51,6 +140,7 @@ if (menuButton && mainNav) {
   });
 }
 
+// Form
 const form = document.getElementById('addProjectForm') as HTMLFormElement | null;
 if (form) {
   form.addEventListener('submit', (e) => {
@@ -63,28 +153,27 @@ if (form) {
     const progInput = document.getElementById('projProg') as HTMLInputElement;
 
     document.querySelectorAll('.error-msg').forEach(el => el.remove());
-
     let isValid = true;
 
     if (titleInput.value.trim().length < 3) {
-      showError(titleInput, 'РњРёРЅРёРјСѓРј 3 СЃРёРјРІРѕР»Р°');
+      showError(titleInput, 'Minimum 3 characters');
       isValid = false;
     }
     if (descInput.value.trim().length < 10) {
-      showError(descInput, 'РњРёРЅРёРјСѓРј 10 СЃРёРјРІРѕР»РѕРІ');
+      showError(descInput, 'Minimum 10 characters');
       isValid = false;
     }
     if (!catInput.value) {
-      showError(catInput, 'Р’С‹Р±РµСЂРёС‚Рµ РєР°С‚РµРіРѕСЂРёСЋ');
+      showError(catInput, 'Please select a category');
       isValid = false;
     }
     if (!dateInput.value) {
-      showError(dateInput, 'РЈРєР°Р¶РёС‚Рµ РґР°С‚Сѓ');
+      showError(dateInput, 'Please specify a date');
       isValid = false;
     }
     const progress = parseInt(progInput.value, 10);
     if (isNaN(progress) || progress < 0 || progress > 100) {
-      showError(progInput, 'РћС‚ 0 РґРѕ 100');
+      showError(progInput, 'Must be between 0 and 100');
       isValid = false;
     }
 
@@ -93,18 +182,17 @@ if (form) {
         id: crypto.randomUUID(),
         title: titleInput.value.trim(),
         description: descInput.value.trim(),
-        category: catInput.value as any,
+        category: catInput.value as Project['category'],
         status: progress === 100 ? 'done' : 'active',
         dueDate: dateInput.value,
         progress: progress
       };
 
-      projects.push(newProject);
-      localStorage.setItem('campusflow_projects', JSON.stringify(projects));
+      localProjects = [...localProjects, newProject]; // Safe immutable update
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(localProjects));
       
       form.reset();
       updateUI();
-updateActiveProjectsCount(projects);
     }
   });
 }
@@ -116,8 +204,8 @@ function showError(input: HTMLElement, message: string): void {
   input.parentElement?.appendChild(error);
 }
 
-updateUI();
-updateActiveProjectsCount(projects);
-
-
-
+// Initialize
+localProjects = loadLocalProjects();
+loadProjects();
+loadDeadlines();
+loadWeather();
